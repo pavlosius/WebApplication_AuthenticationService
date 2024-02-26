@@ -12,7 +12,7 @@ namespace WebApplication_AuthenticationService.Controllers
             _logger = logger;
 
             logger.WriteEvent("Сообщение о событии в программе");
-            logger.WriteError("Сообщение об ошибки в программе");
+            logger.WriteError("Сообщение об ошибке в программе");
         }
 
         [HttpGet]
