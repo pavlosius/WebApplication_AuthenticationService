@@ -2,34 +2,45 @@
 {
     public class Logger : ILogger
     {
-        private string logFolderPath;
+        private ReaderWriterLockSlim lock_ = new ReaderWriterLockSlim();
+        private string logDirectory { get; set; }
         public Logger()
         {
-            logFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "Logs");
+            logDirectory = AppDomain.CurrentDomain.BaseDirectory + @"/_logs/" + DateTime.Now.ToString("dd-MM-yy HH-mm-ss") + @"/";
 
-            if (Directory.Exists(logFolderPath))
-            {
-                
-                Directory.Delete(logFolderPath,true);
-            }
-
-            Directory.CreateDirectory(logFolderPath);
+            if (!Directory.Exists(logDirectory))
+                Directory.CreateDirectory(logDirectory);
         }
+
         public void WriteEvent(string eventMessage)
         {
-            Console.WriteLine(eventMessage);
-
-            string logFilePath = Path.Combine(logFolderPath, "events.txt");
-
-            File.AppendAllText(logFilePath, $"{DateTime.Now} - {eventMessage}\n");
+            lock_.EnterWriteLock();
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(logDirectory + "events.txt", append: true))
+                {
+                    writer.WriteLine(eventMessage);
+                }
+            }
+            finally
+            {
+                lock_.ExitWriteLock();
+            }
         }
         public void WriteError(string errorMessage)
         {
-            Console.WriteLine(errorMessage);
-
-            string logFilePath = Path.Combine(logFolderPath, "errors.txt");
-
-            File.AppendAllText(logFilePath, $"{DateTime.Now} - {errorMessage}\n");
+            lock_.EnterWriteLock();
+            try
+            {
+                using (StreamWriter writer = new StreamWriter("errors.txt", append: true))
+                {
+                    writer.WriteLine(errorMessage);
+                }
+            }
+            finally
+            {
+                lock_.ExitWriteLock();
+            }
         }
     }
 }
