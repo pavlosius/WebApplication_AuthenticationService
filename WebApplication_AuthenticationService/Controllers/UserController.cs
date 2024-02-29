@@ -23,10 +23,31 @@ namespace WebApplication_AuthenticationService.Controllers
                 Id = Guid.NewGuid(),
                 FirstName = "Иван",
                 LastName = "Иванов",
-                Email = "ivanggnail.com",
+                Email = "ivan@gmail.com",
                 Password = "11111122222qq",
                 Login = "ivanov"
             };
+        }
+
+        [HttpGet]
+        [Route("viewmodel")]
+        public UserViewModel GetUserViewModel()
+        {
+            //User user = new User()
+            //{
+            //    Id = Guid.NewGuid(),
+            //    FirstName = "Иван",
+            //    LastName = "Иванов",
+            //    Email = "ivan@gmail.com",
+            //    Password = "11111122222qq",
+            //    Login = "ivanov"
+            //};
+
+            User user = GetUser();
+
+            UserViewModel userViewModel = new UserViewModel(user);
+
+            return userViewModel;
         }
     }
 }
