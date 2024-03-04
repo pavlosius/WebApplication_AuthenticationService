@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication_AuthenticationService.Controllers
 {
@@ -7,9 +8,12 @@ namespace WebApplication_AuthenticationService.Controllers
     public class UserController : ControllerBase
     {
         private ILogger _logger;
-        public UserController(ILogger logger)
+        private IMapper _mapper;
+
+        public UserController(ILogger logger, IMapper mapper)
         {
             _logger = logger;
+            _mapper = mapper;
 
             logger.WriteEvent("Сообщение о событии в программе");
             logger.WriteError("Сообщение об ошибке в программе");
@@ -45,7 +49,9 @@ namespace WebApplication_AuthenticationService.Controllers
 
             User user = GetUser();
 
-            UserViewModel userViewModel = new UserViewModel(user);
+            var userViewModel = _mapper.Map<UserViewModel>(user);
+
+            //UserViewModel userViewModel = new UserViewModel(user);
 
             return userViewModel;
         }

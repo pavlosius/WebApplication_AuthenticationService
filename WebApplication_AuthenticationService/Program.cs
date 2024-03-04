@@ -1,6 +1,15 @@
-
+using AutoMapper;
+using WebApplication_AuthenticationService;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var mapperConfig = new MapperConfiguration((v) =>
+{
+    v.AddProfile(new MappingProfile());
+});
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
 
 // Add services to the container.
 builder.Services.AddSingleton<WebApplication_AuthenticationService.ILogger, WebApplication_AuthenticationService.Logger>();
