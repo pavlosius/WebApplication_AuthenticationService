@@ -13,7 +13,12 @@
                 LastName = "Иванов",
                 Email = "ivan@gmail.com",
                 Password = "11111122222qq",
-                Login = "ivanov"
+                Login = "ivanov",
+                Role = new Role()
+                {
+                    Id = 1,
+                    Name = "Пользователь"
+                }
             });
 
             _users.Add(new User()
@@ -23,7 +28,12 @@
                 LastName = "BBB",
                 Email = "B@gmail.com",
                 Password = "22",
-                Login = "B"
+                Login = "B",
+                Role = new Role()
+                {
+                    Id = 2,
+                    Name = "Администратор"
+                }
             });
 
             _users.Add(new User()
@@ -33,7 +43,12 @@
                 LastName = "CCC",
                 Email = "C@gmail.com",
                 Password = "33",
-                Login = "C"
+                Login = "C",
+                Role = new Role()
+                {
+                    Id = 1,
+                    Name = "Пользователь"
+                }
             });
         }
         public IEnumerable<User> GetAll()

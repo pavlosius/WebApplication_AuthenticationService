@@ -24,7 +24,7 @@ namespace WebApplication_AuthenticationService.Controllers
 
             logger.WriteEvent("Сообщение о событии в программе");
             logger.WriteError("Сообщение об ошибке в программе");
-            
+
         }
 
         [HttpGet]
@@ -45,7 +45,7 @@ namespace WebApplication_AuthenticationService.Controllers
             //};
         }
 
-        [Authorize]
+        [Authorize(Roles = "Администратор")]
         [HttpGet]
         [Route("viewmodel")]
         public UserViewModel GetUserViewModel(string login)
@@ -76,13 +76,15 @@ namespace WebApplication_AuthenticationService.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultRoleClaimType,user.Login)
+                new Claim(ClaimsIdentity.DefaultNameClaimType,user.Login),
+
+                new Claim(ClaimsIdentity.DefaultRoleClaimType,user.Role.Name)
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(
                 claims,
                 "AppCookie",
-                ClaimsIdentity.DefaultNameClaimType, 
+                ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
