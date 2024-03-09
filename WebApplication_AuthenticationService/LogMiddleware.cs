@@ -1,4 +1,6 @@
-﻿namespace WebApplication_AuthenticationService
+﻿using System.Net;
+
+namespace WebApplication_AuthenticationService
 {
     public class LogMiddleware
     {
@@ -13,7 +15,19 @@
 
         public async Task Invoke(HttpContext httpContext)
         {
-            _logger.WriteEvent("Я твой Middleware");
+            var remoteIpAddress = httpContext.Connection.RemoteIpAddress;
+
+            if (remoteIpAddress != null)
+            {
+                string ipAddress = remoteIpAddress.ToString();
+
+                _logger.WriteEvent(ipAddress);
+            }
+            else
+            {
+                _logger.WriteEvent("IP Address is not available.");
+            }
+
             await _next(httpContext);
         }
     }
