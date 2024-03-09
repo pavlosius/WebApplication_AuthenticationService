@@ -1,7 +1,8 @@
 using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using WebApplication_AuthenticationService;
+using WebApplication_AuthenticationService.DAL.Repositories;
+using WebApplication_AuthenticationService.PLL;
+using WebApplication_AuthenticationService.PLL.Middlewares;
+using WebApplication_AuthenticationService.PLL.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,7 @@ builder.Services.AddAuthentication(options => options.DefaultScheme = "Cookies")
     });
 
 // Add services to the container.
-builder.Services.AddSingleton<WebApplication_AuthenticationService.ILogger, WebApplication_AuthenticationService.Logger>();
+builder.Services.AddSingleton<WebApplication_AuthenticationService.PLL.Logging.ILogger, Logger>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
 builder.Services.AddControllers();

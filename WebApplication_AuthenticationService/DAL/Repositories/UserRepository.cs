@@ -1,4 +1,6 @@
-﻿namespace WebApplication_AuthenticationService
+﻿using WebApplication_AuthenticationService.BLL.Models;
+
+namespace WebApplication_AuthenticationService.DAL.Repositories
 {
     public class UserRepository : IUserRepository
     {

@@ -1,4 +1,4 @@
-﻿namespace WebApplication_AuthenticationService
+﻿namespace WebApplication_AuthenticationService.BLL.Models
 {
     public class User
     {

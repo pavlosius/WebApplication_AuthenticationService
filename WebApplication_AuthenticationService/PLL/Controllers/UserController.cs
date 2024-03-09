@@ -5,19 +5,24 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Authentication;
 using System.Security.Claims;
+using WebApplication_AuthenticationService.BLL.Models;
+using WebApplication_AuthenticationService.BLL.ViewModels;
+using WebApplication_AuthenticationService.DAL.Repositories;
+using WebApplication_AuthenticationService.PLL.Logging;
+using WebApplication_AuthenticationService.PLL.Handlers;
 
-namespace WebApplication_AuthenticationService.Controllers
+namespace WebApplication_AuthenticationService.PLL.Controllers
 {
     [ExeptionHandler]
     [ApiController]
     [Route("controller")]
     public class UserController : ControllerBase
     {
-        private ILogger _logger;
+        private Logging.ILogger _logger;
         private IMapper _mapper;
         private IUserRepository _userRepository;
 
-        public UserController(ILogger logger, IMapper mapper, IUserRepository userRepository)
+        public UserController(Logging.ILogger logger, IMapper mapper, IUserRepository userRepository)
         {
             _logger = logger;
             _mapper = mapper;
@@ -64,7 +69,7 @@ namespace WebApplication_AuthenticationService.Controllers
         [Route("authenticate")]
         public async Task<UserViewModel> Authenticate(string login, string password)
         {
-            if (String.IsNullOrEmpty(login) || String.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
                 throw new ArgumentNullException("Запрос не корректен");
 
             User user = _userRepository.GetByLogin(login);

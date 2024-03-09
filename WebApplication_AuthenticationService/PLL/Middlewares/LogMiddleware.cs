@@ -1,13 +1,14 @@
 ﻿using System.Net;
+using WebApplication_AuthenticationService.PLL.Logging;
 
-namespace WebApplication_AuthenticationService
+namespace WebApplication_AuthenticationService.PLL.Middlewares
 {
     public class LogMiddleware
     {
-        private readonly ILogger _logger;
+        private readonly Logging.ILogger _logger;
         private readonly RequestDelegate _next;
 
-        public LogMiddleware(RequestDelegate next, ILogger logger)
+        public LogMiddleware(RequestDelegate next, Logging.ILogger logger)
         {
             _next = next;
             _logger = logger;
