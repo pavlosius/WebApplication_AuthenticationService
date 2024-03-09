@@ -8,6 +8,7 @@ using System.Security.Claims;
 
 namespace WebApplication_AuthenticationService.Controllers
 {
+    [ExeptionHandler]
     [ApiController]
     [Route("controller")]
     public class UserController : ControllerBase
